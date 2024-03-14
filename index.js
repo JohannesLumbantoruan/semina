@@ -18,13 +18,18 @@ app.get('/', (req, res) => {
 });
 
 async function init() {
-  await mongoose.connect(process.env.MONGO_URI);
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
 
-  console.log('Connected to mongodb');
+    console.log('Connected to mongodb');
 
-  app.listen(process.env.PORT || 3000, () => {
-    console.log(`App running on http://localhost:${process.env.PORT || 3000}`);
-  });
+    app.listen(process.env.PORT || 3000, () => {
+      console.log(`App running on http://localhost:${process.env.PORT || 3000}`);
+    });
+  } catch (error) {
+    console.log(error);
+    console.log('Failed connected to mongodb');
+  }
 }
 
 init();
