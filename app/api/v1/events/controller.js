@@ -1,5 +1,6 @@
 const { NotFoundError, BadRequestError } = require('../../../errors');
 const { checkCategory } = require('../../../services/categories');
+const { checkEvent } = require('../../../services/events');
 const { checkImage } = require('../../../services/images');
 const { checkTalent } = require('../../../services/talents');
 const Event = require('./model');
@@ -195,5 +196,32 @@ exports.delete = async (req, res, next) => {
     });
   } catch (error) {
     return next(error);
+  }
+}
+
+exports.updateStatus = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    await checkEvent(id);
+
+    const event = await Event.findById(id);
+
+    if (event.statusEvent === 'Draft') {
+      await Event.findByIdAndUpdate(id, {
+        statusEvent: 'Published'
+      });
+    } else {
+      await Event.findByIdAndUpdate(id, {
+        statusEvent: 'Draft'
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: 'Event status successfully changed'
+    });
+  } catch (err) {
+    return next(err);
   }
 }
