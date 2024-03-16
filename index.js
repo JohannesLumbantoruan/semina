@@ -8,6 +8,8 @@ const categoriesRouter = require('./app/api/v1/categories/routes');
 const imagesRouter = require('./app/api/v1/images/routes');
 const talentsRouter = require('./app/api/v1/talents/routes');
 const eventsRouter = require('./app/api/v1/events/routes');
+const organizersRouter = require('./app/api/v1/organizers/routes');
+const usersRouter = require('./app/api/v1/users/routes');
 
 const errorHandler = require('./app/middlewares/error-handler');
 const notFoundRoute = require('./app/middlewares/not-found-route');
@@ -22,6 +24,8 @@ app.use('/v1/categories', categoriesRouter);
 app.use('/v1/images', imagesRouter);
 app.use('/v1/talents', talentsRouter);
 app.use('/v1/events', eventsRouter);
+app.use('/v1/organizers', organizersRouter);
+app.use('/v1/users', usersRouter);
 
 app.get('/', (req, res) => {
   return res.send('<h1 style="text-align: center;">Welcome to Semina API</h1>');
