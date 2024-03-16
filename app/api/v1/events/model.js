@@ -50,7 +50,7 @@ const schema = new Schema({
     type: String,
     required: true
   },
-  statusEvent: {
+  status: {
     type: String,
     enum: ['Draft', 'Published'],
     default: 'Draft'

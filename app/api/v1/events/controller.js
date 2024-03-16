@@ -81,7 +81,7 @@ exports.post = async (req, res, next) => {
       tagline,
       venueName,
       keyPoint,
-      statusEvent,
+      status,
       tickets,
       image,
       category,
@@ -105,7 +105,7 @@ exports.post = async (req, res, next) => {
       tagline,
       venueName,
       keyPoint,
-      statusEvent,
+      status,
       tickets,
       image,
       category,
@@ -132,7 +132,7 @@ exports.update = async (req, res, next) => {
       tagline,
       venueName,
       keyPoint,
-      statusEvent,
+      status,
       tickets,
       image,
       category,
@@ -159,7 +159,7 @@ exports.update = async (req, res, next) => {
       tagline,
       venueName,
       keyPoint,
-      statusEvent,
+      status,
       tickets,
       image,
       category,
@@ -207,13 +207,13 @@ exports.updateStatus = async (req, res, next) => {
 
     const event = await Event.findById(id);
 
-    if (event.statusEvent === 'Draft') {
+    if (event.status === 'Draft') {
       await Event.findByIdAndUpdate(id, {
-        statusEvent: 'Published'
+        status: 'Published'
       });
     } else {
       await Event.findByIdAndUpdate(id, {
-        statusEvent: 'Draft'
+        status: 'Draft'
       });
     }
 
