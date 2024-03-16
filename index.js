@@ -10,6 +10,7 @@ const talentsRouter = require('./app/api/v1/talents/routes');
 const eventsRouter = require('./app/api/v1/events/routes');
 
 const errorHandler = require('./app/middlewares/error-handler');
+const notFoundRoute = require('./app/middlewares/not-found-route');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.get('/', (req, res) => {
 });
 
 app.use(errorHandler);
+app.use(notFoundRoute);
 
 async function init() {
   try {
