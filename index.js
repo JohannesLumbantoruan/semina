@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const categoriesRouter = require('./app/api/v1/categories/routes');
 const imagesRouter = require('./app/api/v1/images/routes');
 const talentsRouter = require('./app/api/v1/talents/routes');
+const eventsRouter = require('./app/api/v1/events/routes');
 
 const errorHandler = require('./app/middlewares/error-handler');
 
@@ -19,6 +20,7 @@ app.use(express.static('public'));
 app.use('/v1/categories', categoriesRouter);
 app.use('/v1/images', imagesRouter);
 app.use('/v1/talents', talentsRouter);
+app.use('/v1/events', eventsRouter);
 
 app.get('/', (req, res) => {
   return res.send('<h1 style="text-align: center;">Welcome to Semina API</h1>');
