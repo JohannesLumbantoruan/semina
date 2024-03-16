@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 
 const categoriesRouter = require('./app/api/v1/categories/routes');
+const imagesRouter = require('./app/api/v1/images/routes');
 
 const errorHandler = require('./app/middlewares/error-handler');
 
@@ -12,8 +13,10 @@ const app = express();
 
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(express.static('public'));
 
 app.use('/v1/categories', categoriesRouter);
+app.use('/v1/images', imagesRouter);
 
 app.get('/', (req, res) => {
   return res.send('<h1 style="text-align: center;">Welcome to Semina API</h1>');
