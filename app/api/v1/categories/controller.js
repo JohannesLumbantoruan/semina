@@ -1,101 +1,83 @@
-const handleError = require('../../../utils/handleError');
 const Category = require('./model');
+const { NotFoundError, BadRequestError } = require('../../../errors');
 
 exports.get = async (req, res) => {
-  try {
-    const categories = await Category
-      .find()
-      .select({ name: 1 });
+  const categories = await Category
+    .find()
+    .select({ name: 1 });
 
-    res.json({
-      success: true,
-      categories
-    });
-  } catch (error) {
-    return handleError(res, error);
-  }
+  return res.json({
+    success: true,
+    categories
+  });
 };
 
-exports.post = async (req, res) => {
+exports.post = async (req, res, next) => {
   try {
     const { name } = req.body;
+
+    const isExist = await Category.findOne({ name });
+
+    if (isExist) {
+      return next(new BadRequestError('Category already exist'));
+    }
+
     const category = await Category.create({ name });
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       category
     });
   } catch (error) {
-    return handleError(res, error);
+    return next(error);
   }
 };
 
-exports.getById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const category = await Category.findById(id);
+exports.getById = async (req, res, next) => {
+  const { id } = req.params;
+  const category = await Category.findById(id);
 
-    if (!category) {
-      const error = new Error('Category not found');
-      error.code = 404;
-
-      throw error;
-    }
-
-    res.json({
-      success: true,
-      category
-    });
-  } catch (error) {
-    return handleError(res, error);
+  if (!category) {
+    return next(new NotFoundError('Category not found'));
   }
+
+  return res.json({
+    success: true,
+    category
+  });
 };
 
-exports.update = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { name } = req.body;
-    
-    const category = await Category.findOneAndUpdate(
-      { _id: id },
-      { name },
-      { new: true, runValidators: true }
-    );
+exports.update = async (req, res, next) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  
+  const category = await Category.findOneAndUpdate(
+    { _id: id },
+    { name },
+    { new: true, runValidators: true }
+  );
 
-    if (!category) {
-      const error = new Error('Category not found');
-      error.code = 404;
-
-      throw error;
-    }
-
-    res.json({
-      success: true,
-      category
-    });
-  } catch (error) {
-    return handleError(res, error);
+  if (!category) {
+    return next(new NotFoundError('Category not found'));
   }
+
+  return res.json({
+    success: true,
+    category
+  });
 };
 
-exports.delete = async (req, res) => {
-  try {
-    const { id } = req.params;
+exports.delete = async (req, res, next) => {
+  const { id } = req.params;
 
-    const category = await Category.findByIdAndDelete(id);
+  const category = await Category.findByIdAndDelete(id);
 
-    if (!category) {
-      const error = new Error('Category not found');
-      error.code = 404;
-
-      throw error;
-    }
-
-    res.json({
-      success: true,
-      message: 'Category successfully deleted'
-    });
-  } catch (error) {
-    return handleError(res, error);
+  if (!category) {
+    return next(new NotFoundError('Category not found'));
   }
+
+  return res.json({
+    success: true,
+    message: 'Category successfully deleted'
+  });
 };

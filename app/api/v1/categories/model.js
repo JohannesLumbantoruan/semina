@@ -6,7 +6,8 @@ const schema = new Schema({
     type: String,
     minLength: 3,
     maxLength: 20,
-    required: true
+    required: true,
+    unique: true
   },
 }, { timestamps: true });
 
