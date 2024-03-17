@@ -17,7 +17,8 @@ const schema = new Schema({
   password: {
     type: String,
     required: true,
-    minLength: 8
+    minLength: 8,
+    select: false
   },
   role: {
     type: String,
@@ -29,9 +30,11 @@ const schema = new Schema({
     ref: 'Organizer',
     required: true
   }
+}, {
+  timestamps: true
 });
 
-schema.pre('save', async (next) => {
+schema.pre('save', async function (next) {
   if (this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 12);
   }

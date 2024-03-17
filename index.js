@@ -16,6 +16,8 @@ const notFoundRoute = require('./app/middlewares/not-found-route');
 
 const app = express();
 
+mongoose.set('toJSON', { useProjection: true });
+
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(express.static('public'));
