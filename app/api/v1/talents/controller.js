@@ -1,5 +1,5 @@
 const { NotFoundError, BadRequestError } = require('../../../errors');
-const { checkImage } = require('../../../services/images');
+const { checkImage } = require('../../../services/mongoose/images');
 const Talent = require('./model');
 
 exports.get = async (req, res, next) => {

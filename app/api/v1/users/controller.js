@@ -1,5 +1,5 @@
-const { checkOrganizer } = require('../../../services/organizers');
-const { checkUserByEmail } = require('../../../services/users');
+const { checkOrganizer } = require('../../../services/mongoose/organizers');
+const { checkUserByEmail } = require('../../../services/mongoose/users');
 const User = require('./model');
 
 exports.post = async (req, res, next) => {

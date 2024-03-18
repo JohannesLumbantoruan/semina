@@ -1,8 +1,8 @@
 const { NotFoundError, BadRequestError } = require('../../../errors');
-const { checkCategory } = require('../../../services/categories');
-const { checkEvent } = require('../../../services/events');
-const { checkImage } = require('../../../services/images');
-const { checkTalent } = require('../../../services/talents');
+const { checkCategory } = require('../../../services/mongoose/categories');
+const { checkEvent } = require('../../../services/mongoose/events');
+const { checkImage } = require('../../../services/mongoose/images');
+const { checkTalent } = require('../../../services/mongoose/talents');
 const Event = require('./model');
 
 exports.get = async (req, res, next) => {

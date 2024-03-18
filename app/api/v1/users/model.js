@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const { UnauthorizedError } = require('../../../errors');
 const { Schema, model } = mongoose;
 
 const schema = new Schema({
@@ -41,5 +42,13 @@ schema.pre('save', async function (next) {
 
   next();
 });
+
+schema.methods.comparePassword = async function (password) {
+  const isMatch = await bcrypt.compare(password, this.password);
+
+  if (!isMatch) {
+    throw new UnauthorizedError('Wrong crendetials');
+  }
+};
 
 module.exports = model('User', schema);

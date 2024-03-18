@@ -10,6 +10,7 @@ const talentsRouter = require('./app/api/v1/talents/routes');
 const eventsRouter = require('./app/api/v1/events/routes');
 const organizersRouter = require('./app/api/v1/organizers/routes');
 const usersRouter = require('./app/api/v1/users/routes');
+const authenticationsRouter = require('./app/api/v1/authentications/routes');
 
 const errorHandler = require('./app/middlewares/error-handler');
 const notFoundRoute = require('./app/middlewares/not-found-route');
@@ -28,6 +29,7 @@ app.use('/v1/talents', talentsRouter);
 app.use('/v1/events', eventsRouter);
 app.use('/v1/organizers', organizersRouter);
 app.use('/v1/users', usersRouter);
+app.use('/v1', authenticationsRouter);
 
 app.get('/', (req, res) => {
   return res.send('<h1 style="text-align: center;">Welcome to Semina API</h1>');
